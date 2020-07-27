@@ -1,15 +1,17 @@
+import os
 from django.http import HttpResponse, HttpResponseServerError, HttpResponseNotFound, JsonResponse, HttpResponseBadRequest, FileResponse
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
-from . import settings
 from .datastore import DataStore
 
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+print(BASE_DIR)
 
 def server_status(request):
     return HttpResponse('Server is up!')
 
 def setup_database():
-    mydb = DataStore("/home/parikshit/Documents/github/US-accidents/backend/app/app/mydb.csv", "/home/parikshit/Documents/github/US-accidents/backend/app/app/headings.csv")
+    mydb = DataStore(BASE_DIR+"/app/mydb.csv", BASE_DIR+"/app/headings.csv")
     return(mydb)
 
 db = setup_database()

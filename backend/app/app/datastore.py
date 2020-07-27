@@ -1,5 +1,6 @@
 import json
 import os
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 class DataStore(object):
     def __init__(self , location, headings_location):
@@ -13,7 +14,7 @@ class DataStore(object):
        else:
             self.db = {}
             self.headings = []
-            with open('/home/parikshit/Documents/github/US-accidents/backend/app/app/data.csv') as f:
+            with open(BASE_DIR+'/app/data.csv') as f:
                 lis = [line.split(',') for line in f]
                 headings = []        
                 for i, x in enumerate(lis):             
