@@ -10,6 +10,7 @@ urlpatterns = [
     path('getPlayerById', views.search_player),
     path('deletePlayerById', views.delete_player),
     path('editPlayerById', views.edit_player),
-    path('addPlayer', views.add_player)
+    path('addPlayer', views.add_player),
+    path('getNationality', views.get_nationality)
 
 ]

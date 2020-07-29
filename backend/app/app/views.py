@@ -3,6 +3,7 @@ from django.http import HttpResponse, HttpResponseServerError, HttpResponseNotFo
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from .datastore import DataStore
+from collections import defaultdict, Counter
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 print(BASE_DIR)
@@ -68,4 +69,19 @@ def edit_player(request):
                 db.edit(request.POST.get('id'), request.POST.get('data'))
                 return HttpResponse('Saved')
             except Exception as e:
+                return HttpResponseServerError(e)
+
+@csrf_exempt
+def get_nationality(request):
+    if request.method == 'GET':
+        try:
+            result = defaultdict(int)
+            for player in db.db:
+                nation = db.db[player].split(',')[5]
+                if nation in result:
+                    result[nation]+=1
+                else:
+                    result[nation] = 1
+            return JsonResponse(Counter(result).most_common(10), safe=False)
+        except Exception as e:
                 return HttpResponseServerError(e)
