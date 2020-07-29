@@ -8,7 +8,8 @@ class Edit extends React.Component {
         this.state = {
             selected: {}
         };
-
+        this.onChangeInp = this.onChangeInp.bind(this);
+        this.processEdit = this.processEdit.bind(this);
     }
 
     componentDidMount() {
@@ -27,30 +28,54 @@ class Edit extends React.Component {
         })
     }
 
+    onChangeInp(e) {
+        let name = e.target.name
+        let value = e.target.value
+        this.state.selected[name] = value
+        this.forceUpdate();
+        //console.log("updatedstuff",this.state.selected)
+    }
+
+    processEdit() {     
+        const { match: { params } } = this.props;
+        let fd = new FormData();
+        fd.append("id", params.id);
+        fd.append("data", Object.values(this.state.selected).toString());
+         
+        axios({
+            method: 'post',
+            url: `${API_URL}/editPlayerById`,
+            data: fd
+        }).then((data) => {
+            this.props.history.push("/")
+        })
+    }
+
     render() {
-      
+
         return (
-            <div className = "container-fluid">
+            <div className="container-fluid">
                 <h4>Edit Record</h4>
 
                 <br />
                 <div>
-                <form>
-                    {this.state.selected && Object.keys(this.state.selected).map((each) => {
-                        
-                        return (
-                           
+                    <form>
+                        {this.state.selected && Object.keys(this.state.selected).map((each) => {
+
+                            return (
+
                                 <label> <strong>{each}</strong>
-                                    <input type="text" name="each" defaultValue={this.state.selected && this.state.selected[each]} />
+                                    <input disabled= {each == "ID" || each == "Serial"} type="text" name={each} onChange={this.onChangeInp}
+                                        defaultValue={this.state.selected && this.state.selected[each]} />
                                 </label>
-                               
-                           
-                        )
-                    })}
-                     </form>
+
+
+                            )
+                        })}
+                    </form>
                 </div>
 
-                <button type="button" onClick={this.updateBoth} className="btn btn-primary next">Submit</button>
+                <button type="button" onClick={this.processEdit} className="btn btn-primary next">Submit</button>
 
 
             </div>

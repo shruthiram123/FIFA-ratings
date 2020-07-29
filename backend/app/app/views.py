@@ -54,7 +54,8 @@ def add_player(request):
     if request.method == 'POST':
         if request.POST.get('id') and request.POST.get('data'):
             try:
-                db.set(data, id)
+                print(request.POST.get('data'))
+                db.set("\n"+request.POST.get('data'), request.POST.get('id'))
                 return HttpResponse('Saved')
             except Exception as e:
                 return HttpResponseServerError(e)
@@ -64,7 +65,7 @@ def edit_player(request):
     if request.method == 'POST':
         if request.POST.get('id') and request.POST.get('data'):
             try:
-                db.edit(id, data)
+                db.edit(request.POST.get('id'), request.POST.get('data'))
                 return HttpResponse('Saved')
             except Exception as e:
                 return HttpResponseServerError(e)

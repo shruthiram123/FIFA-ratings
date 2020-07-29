@@ -87,6 +87,19 @@ export class Home extends Component {
 
  */
 
+ delRcord(playerId) {
+    let fd = new FormData();
+    fd.append("id", playerId);
+     
+    axios({
+        method: 'post',
+        url: `${API_URL}/deletePlayerById`,
+        data: fd
+    }).then((data) => {
+        window.location.reload();
+    })
+ }
+
     render() {
        
         /* this.state.headingsRaw && this.state.headingsRaw.map((each) => {
@@ -95,7 +108,7 @@ export class Home extends Component {
                 "accessor": each
             })
         }) */
-        console.log("data", this.state.data)
+        //console.log("data", this.state.data)
         return (
             <div className = "container-fluid">
                 {/* <button onClick={this.checkServerStatus}>Check server status</button> */}
@@ -138,10 +151,12 @@ export class Home extends Component {
                                 this.setState({
                                     pages: Math.ceil(data.data.total/state.pageSize),
                                     headings: data.data.headings.map((each) => {
+                                        
                                         return({
                                             "Header": each,
                                             "accessor": each
                                         })
+                                    
                                 }),
                                     headingsRaw: data.data.headings
                                 })
@@ -184,7 +199,11 @@ export class Home extends Component {
                     }}
                 />
                 <br />
-                <Button  disabled = {!this.state.selected} onClick={() => this.props.history.push("/Edit/"+this.state.data[this.state.selected].ID)}>Edit Selected</Button>
+                <div className = "row" >
+                <Button  disabled = {!this.state.selected} onClick={() => this.props.history.push("/Edit/"+this.state.data[this.state.selected].ID)}>Edit Selected</Button> &nbsp;
+                <Button  disabled = {!this.state.selected} onClick={() => this.delRcord(this.state.data[this.state.selected].ID)}>Delete Selected</Button >&nbsp;
+                <Button  onClick={() => this.props.history.push("/Add")}>Add Record</Button>
+                </div>
             </div>
         )
     }
