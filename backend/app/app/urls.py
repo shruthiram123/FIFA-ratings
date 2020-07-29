@@ -11,6 +11,9 @@ urlpatterns = [
     path('deletePlayerById', views.delete_player),
     path('editPlayerById', views.edit_player),
     path('addPlayer', views.add_player),
-    path('getNationality', views.get_nationality)
-
+    path('getNationality', views.get_nationality),
+    path('getTopRatings', views.get_top_ratings),
+    path('getFootStats', views.get_foot_stats),
+    path('getPositionStats', views.get_position_stats),
+    path('getWageStats', views.get_wage_stats),
 ]
