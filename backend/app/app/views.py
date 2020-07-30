@@ -109,7 +109,7 @@ def get_foot_stats(request):
                 else:
                     foot = db.db[player].split(',')[14]
                 temp[foot]+=1
-            return JsonResponse(Counter(temp).most_common(5), safe=False)
+            return JsonResponse(Counter(temp).most_common(2), safe=False)
         except Exception as e:
                 return HttpResponseServerError(e)
 

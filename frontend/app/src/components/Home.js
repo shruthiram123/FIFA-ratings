@@ -114,12 +114,21 @@ export class Home extends Component {
                 {/* <button onClick={this.checkServerStatus}>Check server status</button> */}
                
            {/*      {this.state.serverStatus} */}
+           <br />
+           <div className = "row" style = {{textAlign: "right"}}>
+                <Button  variant="primary" disabled = {!this.state.selected} onClick={() => this.props.history.push("/Edit/"+this.state.data[this.state.selected].ID)}>Edit Selected</Button> &nbsp;
+                <Button  variant="secondary" disabled = {!this.state.selected} onClick={() => this.delRcord(this.state.data[this.state.selected].ID)}>Delete Selected</Button >&nbsp;
+                <Button variant="success" onClick={() => this.props.history.push("/Add")}>Add Record</Button>&nbsp;
+                <Button variant="dark" onClick={() => this.props.history.push("/Analytics/")}>Show Analytics</Button >&nbsp;
+                </div>
+                <br />
+
                 <ReactTable 
                     data={this.state.data} // should default to []
                     pages={this.state.pages} // should default to -1 (which means we don't know how many pages we have)
                     loading={this.state.loading}
                     manual // informs React Table that you'll be handling sorting and pagination server-side
-                    defaultPageSize={10}
+                    defaultPageSize={18}
                     columns={this.state.headings}
                     className="-striped -highlight"
                     getTrProps={(state, rowInfo) => {
@@ -199,11 +208,7 @@ export class Home extends Component {
                     }}
                 />
                 <br />
-                <div className = "row" >
-                <Button  disabled = {!this.state.selected} onClick={() => this.props.history.push("/Edit/"+this.state.data[this.state.selected].ID)}>Edit Selected</Button> &nbsp;
-                <Button  disabled = {!this.state.selected} onClick={() => this.delRcord(this.state.data[this.state.selected].ID)}>Delete Selected</Button >&nbsp;
-                <Button  onClick={() => this.props.history.push("/Add")}>Add Record</Button>
-                </div>
+                
             </div>
         )
     }

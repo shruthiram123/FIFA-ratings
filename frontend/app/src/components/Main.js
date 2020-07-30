@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import Edit from './Edit'
 import Add from './Add'
 import Home from './Home';
+import Analytics from './Analytics';
 
 export class Main extends Component {
     render() {
@@ -11,6 +12,7 @@ export class Main extends Component {
               <Route exact path="/" component={Home}/>
               <Route exact path="/Edit/:id" component={Edit}/>
               <Route exact path="/Add" component={Add}/>
+              <Route exact path="/Analytics" component={Analytics}/>
           </Switch>  
         );
     }
